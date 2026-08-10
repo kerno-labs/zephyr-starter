@@ -9,9 +9,7 @@ include(nanopb)
 target_include_directories(app PRIVATE include)
 target_sources(app PRIVATE
   src/main.c
-  src/network.c
-  src/telemetry.c
-  src/telemetry/collector.c
+  src/wifi.c
   src/telemetry/mcu_temperature.c
   src/telemetry/imu.c
   src/time_service.c

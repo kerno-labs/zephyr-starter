@@ -193,7 +193,7 @@ static void mqtt_thread(void)
 
 K_THREAD_DEFINE(mqtt_thread_id, 4096, mqtt_thread, NULL, NULL, NULL, 5, 0, 0);
 
-void mqtt_uploader_start(void)
+void mqtt_uploader_init(void)
 {
 	/* 启动时一次性生成设备专属的 Raw protobuf topic。 */
 	snprintk(topic, sizeof(topic), "/sys/%s/thing/model/up_raw", CONFIG_APP_DEVICE_NAME);

@@ -1,4 +1,4 @@
-/* Wi-Fi 生命周期模块：只上报网络就绪状态，不直接操作 MQTT。 */
+/* Wi-Fi 生命周期模块：DHCP 成功后通知 MQTT 上传器。 */
 #include <string.h>
 
 #include <zephyr/logging/log.h>
@@ -8,13 +8,12 @@
 #include <zephyr/sys/util.h>
 
 #include "mqtt_uploader.h"
-#include "network.h"
+#include "wifi.h"
 
-LOG_MODULE_REGISTER(network, LOG_LEVEL_INF);
+LOG_MODULE_REGISTER(wifi, LOG_LEVEL_INF);
 
 static void wifi_event(struct net_mgmt_event_callback *cb, uint64_t event, struct net_if *iface)
 {
-	/* 仅在 DHCP 完成后，DNS 与 MQTT 才具备运行条件。 */
 	ARG_UNUSED(cb);
 	ARG_UNUSED(iface);
 	if (event == NET_EVENT_IPV4_ADDR_ADD) {
@@ -28,9 +27,8 @@ static void wifi_event(struct net_mgmt_event_callback *cb, uint64_t event, struc
 
 static struct net_mgmt_event_callback wifi_events;
 
-void network_start(void)
+void wifi_start(void)
 {
-	/* 先注册事件，避免遗漏过早到达的 DHCP 事件。 */
 	struct wifi_connect_req_params params = {
 		.ssid = CONFIG_APP_WIFI_SSID,
 		.ssid_length = strlen(CONFIG_APP_WIFI_SSID),
@@ -43,7 +41,6 @@ void network_start(void)
 	net_mgmt_init_event_callback(&wifi_events, wifi_event,
 		NET_EVENT_IPV4_ADDR_ADD | NET_EVENT_WIFI_DISCONNECT_RESULT);
 	net_mgmt_add_event_callback(&wifi_events);
-
 	if (!IS_ENABLED(CONFIG_APP_MQTT_ENABLED)) {
 		return;
 	}
