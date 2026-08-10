@@ -1,0 +1,71 @@
+# 应用自身的部署与遥测策略配置。
+mainmenu "CoreS3 Raw MQTT telemetry"
+
+config APP_MQTT_ENABLED
+	bool "Enable MQTT publishing"
+	default n
+
+config APP_WIFI_SSID
+	string "Wi-Fi SSID"
+	default ""
+
+config APP_WIFI_PSK
+	string "Wi-Fi passphrase"
+	default ""
+
+config APP_MQTT_HOST
+	string "MQTT broker hostname"
+	default ""
+
+config APP_MQTT_PORT
+	int "MQTTS broker port"
+	default 8883
+	range 1 65535
+
+config APP_MQTT_USERNAME
+	string "MQTT username"
+	default ""
+
+config APP_MQTT_PASSWORD
+	string "MQTT password"
+	default ""
+
+config APP_MQTT_CA_CERT_PATH
+	string "CA certificate path (relative to application root)"
+	default ""
+
+config APP_DEVICE_NAME
+	string "Device name used in the MQTT topic"
+	default "cores3-001"
+
+config APP_TEMPERATURE_SAMPLE_INTERVAL_S
+	int "CPU temperature sample interval in seconds"
+	default 300
+	range 1 86400
+
+config APP_TEMPERATURE_BATCH_SIZE
+	int "CPU temperature samples per upload batch"
+	default 6
+	range 1 60
+
+config APP_IMU_SAMPLE_INTERVAL_S
+	int "IMU sample interval in seconds"
+	default 10
+	range 1 86400
+
+config APP_IMU_BATCH_SIZE
+	int "IMU samples per upload batch"
+	default 60
+	range 1 120
+
+config APP_MQTT_QUEUE_DEPTH
+	int "Complete batch send queue depth"
+	default 4
+	range 1 32
+
+config APP_MQTT_BUFFER_SIZE
+	int "MQTT and encoded protobuf buffer size"
+	default 2048
+	range 512 8192
+
+source "Kconfig.zephyr"
