@@ -1,0 +1,2 @@
+&wifi { status = "okay"; };
+&coretemp { status = "okay"; };

@@ -1,0 +1,5 @@
+# nanopb 生成静态数组的上限，数值来自应用 Kconfig。
+starter.iot.telemetry.v1.PropertyPost.version max_size:8
+starter.iot.telemetry.v1.PropertyPost.params max_count:1
+starter.iot.telemetry.v1.TemperatureBatch.samples max_count:@CONFIG_APP_TEMPERATURE_BATCH_SIZE@
+starter.iot.telemetry.v1.ImuBatch.samples max_count:@CONFIG_APP_IMU_BATCH_SIZE@
