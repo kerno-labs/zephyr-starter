@@ -1,3 +1,7 @@
+app.local.conf
+credentials/
 build/
 build-*/
 zephyr/zephyr.dts
+proto/*.pb.c
+proto/*.pb.h

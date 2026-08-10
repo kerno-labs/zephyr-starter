@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+// CoreS3 与服务端共同使用的 Raw MQTT 遥测协议。
+package starter.iot.telemetry.v1;
+
+message PropertyPost {
+  uint64 id = 1;
+  string version = 2;
+  System sys = 3;
+  repeated Property params = 4;
+  Method method = 5;
+}
+
+message System {
+  bool ack = 1;
+}
+
+enum Method {
+  METHOD_UNSPECIFIED = 0;
+  PROPERTY_POST = 1;
+}
+
+message Property {
+  // 当前批次首个样本的 UTC 毫秒时间戳。
+  uint64 time_ms = 1;
+
+  oneof value {
+    TemperatureBatch cpu_temperature = 10;
+    ImuBatch imu = 11;
+  }
+}
+
+message TemperatureBatch {
+  repeated Temperature samples = 1;
+}
+
+message Temperature {
+  // MCU 温度，摄氏度 × 1000。
+  sint32 value = 1;
+}
+
+message ImuBatch {
+  repeated Imu samples = 1;
+}
+
+message Imu {
+  // 加速度，m/s² × 1000。
+  sint32 accel_x = 1;
+  sint32 accel_y = 2;
+  sint32 accel_z = 3;
+
+  // 角速度，rad/s × 1000。
+  sint32 gyro_x = 4;
+  sint32 gyro_y = 5;
+  sint32 gyro_z = 6;
+}

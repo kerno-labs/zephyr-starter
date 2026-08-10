@@ -1,0 +1,14 @@
+# 复制为 app.local.conf 后填写部署凭据。
+# app.local.conf 会被 Git 忽略。
+CONFIG_APP_MQTT_ENABLED=y
+CONFIG_APP_WIFI_SSID="your-2.4GHz-ssid"
+CONFIG_APP_WIFI_PSK="your-wifi-password"
+CONFIG_APP_MQTT_HOST="mqtt.example.com"
+CONFIG_APP_MQTT_PORT=8883
+CONFIG_APP_MQTT_USERNAME="device-user"
+CONFIG_APP_MQTT_PASSWORD="device-password"
+# CA 证书在 Zephyr CMake 配置阶段嵌入固件。
+CONFIG_APP_MQTT_CA_CERT_PATH="credentials/ca.pem"
+CONFIG_APP_DEVICE_NAME="cores3-001"
+CONFIG_APP_TEMPERATURE_BATCH_SIZE=6
+CONFIG_APP_IMU_BATCH_SIZE=60
